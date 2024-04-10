@@ -1,6 +1,5 @@
-#版本
 V3.5.4
-```sh
+
 function hex() {
 echo ''$1'' | perl -0777pe 's|([0-9a-zA-Z]{2}+(?![^\(]*\)))|\\x${1}|gs'
 }
@@ -24,4 +23,58 @@ replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.1.5.d
 }
 patch
 prep "/Applications/Topaz Video AI.app"
-```
+
+---------------
+
+Topaz Video AI v4.2.2
+
+function hex() {
+echo ''$1'' | perl -0777pe 's|([0-9a-zA-Z]{2}+(?![^\(]*\)))|\\x${1}|gs'
+}
+function replace() {
+declare -r dom=$( hex $2 )
+declare -r sub=$( hex $3 )
+sudo perl -0777pi -e 'BEGIN{$/=\1e8} s|'$dom'|'$sub'|gs' "$1"
+return
+}
+function prep() {
+sudo xattr -cr "$1"
+sudo xattr -r -d com.apple.quarantine "$1"
+sudo codesign --force --deep --sign - "$1"
+}
+function patch() {
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" 'A3030054' '55000014'
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" '0F8297000000' '660F1F440000'
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" '0F8430060000' 'E93106000000'
+replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.3.8.dylib" '020054200080' '020054000080'
+replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.3.8.dylib" 'B0014180' 'B0004180'
+}
+patch
+prep "/Applications/Topaz Video AI.app"
+
+Topaz Video AI v5.0.1
+
+function hex() {
+echo ''$1'' | perl -0777pe 's|([0-9a-zA-Z]{2}+(?![^\(]*\)))|\\x${1}|gs'
+}
+function replace() {
+declare -r dom=$( hex $2 )
+declare -r sub=$( hex $3 )
+sudo perl -0777pi -e 'BEGIN{$/=\1e8} s|'$dom'|'$sub'|gs' "$1"
+return
+}
+function prep() {
+sudo xattr -cr "$1"
+sudo xattr -r -d com.apple.quarantine "$1"
+sudo codesign --force --deep --sign - "$1"
+}
+function patch() {
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" 'A3030054' '55000014'
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" '0F8297000000' '660F1F440000'
+replace "/Applications/Topaz Video AI.app/Contents/MacOS/login" '0F8430060000' 'E93106000000'
+replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.3.15.dylib" '020054200080' '020054000080'
+replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.3.15.dylib" 'B0014180' 'B0004180'
+}
+patch
+prep "/Applications/Topaz Video AI.app"
+
