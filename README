@@ -52,6 +52,8 @@ replace "/Applications/Topaz Video AI.app/Contents/Frameworks/libvideoai.1.3.8.d
 patch
 prep "/Applications/Topaz Video AI.app"
 
+---------------
+
 Topaz Video AI v5.0.1
 
 function hex() {
